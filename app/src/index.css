@@ -1,0 +1,114 @@
+@import url('https://fonts.googleapis.com/css2?family=Comforter&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+*{
+  @apply box-border m-0 select-none
+}
+
+#root{
+  @apply h-full
+}
+
+body{
+  @apply w-full text-black-900 font-poppins
+}
+
+.navLogo{
+  @apply text-2xl font-comforter
+}
+
+.navbar-container{
+  @apply w-full h-12 text-white-100 bg-black-900 flex justify-center items-center sticky top-0 sm:text-xs md:text-sm lg:text-base z-10
+}
+
+.navbar-content{
+  @apply w-11/12 xs:w-10/12 h-full flex flex-row items-center
+}
+
+.navLink{
+  @apply flex justify-center items-center lg:m-2 md:m-1 sm:m-0.5 cursor-pointer
+}
+
+.navlink-no-center{
+  @apply lg:p-2 md:p-1 sm:p-0.5 cursor-pointer text-white-600 hover:text-white-100
+}
+
+.main-container{
+  @apply m-auto lg:w-9/12 md:w-10/12 sm:w-11/12 pt-1 mb-10% mt-8 min-h-screen
+}
+
+.sub-container{
+  @apply m-auto
+}
+
+.btn-black{
+  @apply py-2 text-center text-white-100 bg-black-900 ring-2 ring-black-500 rounded-xl cursor-pointer active:ring-black-300 active:ring-2
+}
+
+.btn-black-edgy{
+  @apply py-2 text-center text-white-100 bg-black-900 ring-1 ring-black-500 cursor-pointer active:ring-black-300 active:ring-2
+}
+
+.btn-black-inactive{
+  @apply py-2 text-center text-white-600 bg-black-400 ring-2 ring-black-500 rounded-xl
+}
+
+.btn-black-error{
+  @apply py-2 text-center text-red-500 bg-black-900 ring-2 ring-black-500 rounded-xl cursor-pointer active:ring-black-300 active:ring-2
+}
+
+.textArea{
+  @apply mt-1 w-full border-2 border-black-200 focus:border-black-900 rounded-lg transition duration-500
+}
+
+.input{
+  @apply my-1 p-2 w-full border-2 border-black-200 focus:border-black-900 rounded-lg transition duration-500
+}
+
+.navlink-stripper{
+  @apply hover:text-black-500 visited:text-black-500 active:text-black-500
+}
+
+.main-grid{
+  @apply m-auto grid xl:grid-cols-4 lg:grid-cols-3 sm:grid-cols-2 place-items-center
+}
+
+.cart-columns{
+  @apply grid grid-cols-6 text-center mt-8
+}
+
+.cart-divider{
+  @apply bg-black-100 h-1px mt-8
+}
+
+.filter-normal{
+  @apply fixed z-10 text-black-500 top-20 left-0 cursor-pointer text-2xl bg-black-100 rounded-r-lg w-8 h-8
+}
+
+a{
+  @apply hover:text-white-100 visited:text-white-600 active:text-white-100
+}
+
+textarea{
+  @apply focus:outline-offset-0 focus:outline-none resize-none p-1
+}
+
+input{
+  @apply focus:outline-offset-0 focus:outline-none 
+}
+
+option{
+  @apply bg-black-100 before:hover:bg-black-300 
+}
+
+td{
+  @apply text-center border-b-2 border-white-600 p-2
+}
+
+th{
+  @apply text-center border-b-2 border-white-600 p-4
+}
