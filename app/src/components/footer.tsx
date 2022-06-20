@@ -30,7 +30,7 @@ const Footer:FC = () => {
             </div>
             <div className = "w-2/3 bg-black-300 h-1px m-auto"></div>
             <div className="flex flex-row w-2/3 mx-auto mt-4 text-white-600">
-                <div className=" font-comforter text-white-100 text-2xl font-medium cursor-pointer">Merch shop</div>
+                <div className=" font-comforter text-white-100 text-2xl font-medium cursor-pointer">Youtube recovery</div>
                 <div className=" ml-auto flex flex-row text-md">
                     <div className="my-auto">Techstack</div>
                     <SiCsharp className="mx-1 my-auto"/>

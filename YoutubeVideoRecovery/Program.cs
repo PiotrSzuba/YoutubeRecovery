@@ -58,9 +58,36 @@ app.MapPost("/api/login", async (GoogleToken token, YoutubeRecoveryContext db) =
     var tokenInfo = await client.GetAsync($"https://www.googleapis.com/oauth2/v3/tokeninfo?access_token={token.access_token}");
     var profileInfo = await client.GetAsync($"https://www.googleapis.com/oauth2/v3/userinfo?access_token={token.access_token}");
     var content = profileInfo.Content.ReadAsStringAsync().Result;
+    var googleUser = JsonConvert.DeserializeObject<GoogleUser>(content);
 
+    User? dbUser = null;
+    if (googleUser == null || googleUser.email == null)
+    {
+        return dbUser;
+    }
+    try
+    {
+        dbUser = db.Users.Where(x => x.Email == googleUser.email).First();
+    }
+    catch{}
 
-    return content;
+    if (dbUser != null)
+    {
+        return dbUser;
+    }
+
+    dbUser = new User
+    {
+        Username = googleUser.name,
+        Email = googleUser.email,
+        PictureUrl = googleUser.picture,
+        Locale = googleUser.locale,
+        RecoveredVideos = 0,
+    };
+    db.Users.Add(dbUser);
+    await db.SaveChangesAsync();
+
+    return dbUser;
 });
 
 app.MapGet("/", async (YoutubeRecoveryContext db) =>

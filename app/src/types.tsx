@@ -16,3 +16,12 @@ export type Video = {
     videoOwnerChannelId: string;
     privacyStatus: string;
 }
+
+export type User = {
+    userId: number;
+    username: string;
+    email: string;
+    pictureUrl: string;
+    locale: string;
+    recoveredVideos: number;
+}
