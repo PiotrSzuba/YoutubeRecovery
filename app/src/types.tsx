@@ -24,4 +24,5 @@ export type User = {
     pictureUrl: string;
     locale: string;
     recoveredVideos: number;
+    channelId: string;
 }

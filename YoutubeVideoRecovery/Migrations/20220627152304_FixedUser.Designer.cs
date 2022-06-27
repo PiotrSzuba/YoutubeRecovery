@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using YoutubeVideoRecovery.Data;
 
@@ -10,9 +11,10 @@ using YoutubeVideoRecovery.Data;
 namespace YoutubeVideoRecovery.Migrations
 {
     [DbContext(typeof(YoutubeRecoveryContext))]
-    partial class YoutubeRecoveryContextModelSnapshot : ModelSnapshot
+    [Migration("20220627152304_FixedUser")]
+    partial class FixedUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -35,15 +37,10 @@ namespace YoutubeVideoRecovery.Migrations
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
                     b.Property<string>("YtPlaylistId")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("PlaylistId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Playlists");
                 });
@@ -118,17 +115,6 @@ namespace YoutubeVideoRecovery.Migrations
                     b.ToTable("Videos");
                 });
 
-            modelBuilder.Entity("YoutubeVideoRecovery.Models.Playlist", b =>
-                {
-                    b.HasOne("YoutubeVideoRecovery.Models.User", "User")
-                        .WithMany("Playlists")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("YoutubeVideoRecovery.Models.Video", b =>
                 {
                     b.HasOne("YoutubeVideoRecovery.Models.Playlist", "Playlist")
@@ -143,11 +129,6 @@ namespace YoutubeVideoRecovery.Migrations
             modelBuilder.Entity("YoutubeVideoRecovery.Models.Playlist", b =>
                 {
                     b.Navigation("Videos");
-                });
-
-            modelBuilder.Entity("YoutubeVideoRecovery.Models.User", b =>
-                {
-                    b.Navigation("Playlists");
                 });
 #pragma warning restore 612, 618
         }

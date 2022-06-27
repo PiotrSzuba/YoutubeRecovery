@@ -32,7 +32,7 @@ public class YoutubePlaylist
         return new YoutubePlaylist(JsonConvert.DeserializeObject<Root>(jsonResponse));
     }
 
-    public List<Models.Playlist> GetAllPlaylists()
+    public List<Models.Playlist> GetAllPlaylists(User user)
     {
         if (root == null || root.items == null)
         {
@@ -55,7 +55,8 @@ public class YoutubePlaylist
             {
                 YtPlaylistId = item.id,
                 Title = item.snippet.title,
-                ThumbnailUrl = item.snippet.thumbnails.medium.url
+                ThumbnailUrl = item.snippet.thumbnails.medium.url,
+                UserId = user.UserId
             });
         }
 

@@ -8,9 +8,10 @@ public class Playlist
 {
     [Key]
     public int PlaylistId { get; set; }
-    //[ForeignKey("User")]
-    //public int UserId { get; set; }
-    //public virtual User? User { get; set; }
+
+    [ForeignKey("User")]
+    public int UserId { get; set; }
+    public virtual User? User { get; set; }
     public string? YtPlaylistId { get; set; }
     public string? Title { get; set; }
     public string? ThumbnailUrl { get; set; }
