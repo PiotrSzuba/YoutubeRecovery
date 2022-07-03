@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using YoutubeVideoRecovery.Data;
 using YoutubeVideoRecovery.Models;
+using YoutubeVideoRecovery.Utils;
 using YoutubeVideoRecovery.ViewModels;
-
 
 namespace YoutubeVideoRecovery.Controllers;
 
@@ -10,23 +10,28 @@ public static class VideosController
 {
     public static void MapVideosEndpoints(this IEndpointRouteBuilder routes)
     {
-        routes.MapGet("/api/Videos", async (YoutubeRecoveryContext db) =>
+        routes.MapGet("/api/Videos/{playlistId}", async(int PlaylistId, YoutubeRecoveryContext db, HttpRequest request) =>
         {
-            return await db.Videos.ToListAsync();
-        })
-        .WithName("GetAllVideos");
+            var auth = RouteExtensions.Authorize(request);
+            if (auth == 0)
+            {
+                return Results.Unauthorized();
+            }
 
-        routes.MapGet("/api/Videos/{playlistId}", async(int PlaylistId, YoutubeRecoveryContext db) =>
-        {
-            var foundModel = await db.Playlists.FindAsync(PlaylistId);
-            if (foundModel is null)
+            var model = await db.Playlists.FindAsync(PlaylistId);
+            if (model is null)
             {
                 return Results.NotFound();
             }
 
-            var test = await db.Videos.Where(v => v.PlaylistId == PlaylistId).Select(v => new VideoViewModel(v)).ToListAsync();
-            test = test.OrderBy(x => x.Postition).ToList();
-            return Results.Ok(test);
+            if (model.UserId != auth)
+            {
+                return Results.Unauthorized();
+            }
+
+            var videos = await db.Videos.Where(v => v.PlaylistId == PlaylistId).Select(v => new VideoViewModel(v)).ToListAsync();
+            videos = videos.OrderBy(x => x.Postition).ToList();
+            return Results.Ok(videos);
         })
         .WithName("GetVideosInPlayList");
     }

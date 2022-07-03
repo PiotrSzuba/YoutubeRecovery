@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import VideoCard from "../components/videoCard";
 import "../index.css"
 import { Video } from "../types";
+import baseUrl from "../config";
 
 const Videos:FC = () => {
 
@@ -16,7 +17,7 @@ const Videos:FC = () => {
     const [videos,setVideos] = useState<Video[]>([]);
     useEffect(() => {
         window.scroll(0,0);
-        axios.get('https://localhost:53523/api/videos/' + getId())
+        axios.get(baseUrl + "/videos/" + getId())
             .then(res => {
                 const data = res.data;
                 setVideos(data);

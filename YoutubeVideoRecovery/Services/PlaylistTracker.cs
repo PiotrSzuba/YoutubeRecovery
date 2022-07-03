@@ -10,6 +10,7 @@ namespace YoutubeVideoRecovery.Services;
 public class PlaylistTracker : IHostedService, IDisposable
 {
     private readonly YoutubeRecoveryContext db;
+    private readonly PeriodicTimer _timer = new PeriodicTimer(TimeSpan.FromHours(24));
     public PlaylistTracker(IServiceProvider serviceProvider)
     {
         db = serviceProvider.CreateScope().ServiceProvider.GetRequiredService<YoutubeRecoveryContext>();
@@ -17,15 +18,14 @@ public class PlaylistTracker : IHostedService, IDisposable
 
     public void Dispose()
     {
-        throw new NotImplementedException();
+        _timer.Dispose();
     }
 
     public Task StartAsync(CancellationToken cancellationToken)
     {
         Task.Run(async () =>
         {
-            var hourInMs = 3600000;
-            while (!cancellationToken.IsCancellationRequested)
+            while (await _timer.WaitForNextTickAsync(cancellationToken) && !cancellationToken.IsCancellationRequested)
             {
                 Console.WriteLine("Playlist update Started !");
                 var sw = new Stopwatch();
@@ -39,7 +39,6 @@ public class PlaylistTracker : IHostedService, IDisposable
                 sw.Stop();
                 TimeSpan ts = sw.Elapsed;
                 Console.WriteLine(string.Format("Users Playlists updated. \n TimeTaken: {0:D2} {1:D2}h {2:D2}min {3:D2}sec {4:D3}ms", ts.Days, ts.Hours, ts.Minutes, ts.Seconds, ts.Milliseconds));
-                await Task.Delay(6 * hourInMs, cancellationToken);
             }
         },cancellationToken);
 
@@ -51,7 +50,7 @@ public class PlaylistTracker : IHostedService, IDisposable
         return Task.CompletedTask;
     }
 
-    private async Task UpdateUsersPlaylist(User user)
+    public async Task UpdateUsersPlaylist(User user)
     {
         if(user.ChannelId == null)
         {

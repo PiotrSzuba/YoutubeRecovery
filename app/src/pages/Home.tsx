@@ -5,6 +5,8 @@ import "../index.css"
 import axios from "axios";
 import { User } from "../types";
 import { userContext } from "../contexts/userContext";
+import baseUrl from "../config";
+
 
 const Home:FC = () => {
     let navigate = useNavigate(); 
@@ -16,7 +18,7 @@ const Home:FC = () => {
     const [errorMessage, setErrorMessage] = useState<string>("");
 
     const sendDataToBackend = (tokenResponse: TokenResponse) => {
-        axios.post('https://localhost:53523/api/login/' , tokenResponse)
+        axios.post(baseUrl + "/account/login/" , tokenResponse)
             .then(res => {
                 const data = res.data;
                 if(data && handleUserChange){
@@ -49,7 +51,7 @@ const Home:FC = () => {
         }
         let updatedUser = user;
         updatedUser.channelId = channelId;
-        axios.post('https://localhost:53523/api/account/' , updatedUser)
+        axios.post(baseUrl + '/account/addchannel/' , updatedUser)
         .then(res => {
             const data = res.data;
             if(!data || !handleUserChange){
@@ -67,6 +69,7 @@ const Home:FC = () => {
     const logout = () => {
         if(handleUserChange){
             handleUserChange(undefined);
+            localStorage.clear();
         }
     }
 

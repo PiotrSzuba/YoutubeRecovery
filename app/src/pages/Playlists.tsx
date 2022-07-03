@@ -3,12 +3,13 @@ import axios from 'axios';
 import "../index.css"
 import { Playlist } from "../types";
 import PlaylistCard from "../components/playlistCard";
+import baseUrl from "../config";
 
 const Playlists:FC = () => {
     const [playlists,setPlaylists] = useState<Playlist[]>([]);
     useEffect(() => {
         window.scroll(0,0);
-        axios.get('https://localhost:53523/api/playlist')
+        axios.get(baseUrl + '/playlist')
             .then(res => {
                 const data = res.data;
                 setPlaylists(data);

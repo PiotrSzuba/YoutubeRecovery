@@ -1,0 +1,15 @@
+{
+  "dependencies": {
+    "apis1": {
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.ApiManagement/service/ytrecovery-api/apis/youtuberecovery",
+      "type": "apis.azure"
+    },
+    "mssql1": {
+      "secretStore": "AzureAppSettings",
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/youtubevideorecoverydbserver/databases/YoutubeVideoRecovery_db",
+      "type": "mssql.azure",
+      "connectionId": "ConnectionStrings:YoutubeRecoveryContext",
+      "dynamicId": null
+    }
+  }
+}
